@@ -1,21 +1,39 @@
-@extends('base')
-@section('conteudo')
+@extends("base")
+@section("conteudo")
+@section('titulo','Formulário de Aluno')
+@php
+    if(!empty($dado->id)){
+        $route = route ('aluno.update',$dado->id)
+    }else{
+        $route = route('aluno.store')
+    }
+@endphp
 
-    <form action="{{ route('aluno.store') }}" method="post">
+<form action="{{route $route}}" method="post">
 
-        @csrf
+    @csrf
 
-        <label for="">Nome</label><br>
-        <input type="text" name="nome"><br>
+    @if(!empty($dado->id))
+        @method('put')
+    @endif
 
-        <label for="">Telefone</label><br>
-        <input type="text" name="telefone"><br>
+    <input type="hidden" name="id">
+    value="@if ((!empty$dado->id)) {{$dado->id}}<br>
 
-        <label for="">CPF</label><br>
-        <input type="text" name="cpf"><br>
+    <label for="">Nome</label><br>
+    <input type="text" name="nome" class="form-control">
+    value="@if ((!empty$dado->nome)) {{$dado->nome}}@elseif (!empty(old('nome'))) {{old('nome')}}@else {{""}} @endif"<br>
 
-        <button type="submit">Salvar</button>
-        <button><a href="{{ url('aluno') }}">Voltar</a></button>
-    </form>
+    <label for="">Telefone</label><br>
+    <input type="text" name="telefone" class="form-control" value="{{$dado->nome)}}"><br>
+    value="@if ((!empty$dado->telefone)) {{$dado->telefone}}@elseif (!empty(old('telefone'))) {{old('telefone')}}@else {{""}} @endif"<br>
+
+    <label for="">cpf</label><br>
+    <input type="text" name="cpf" class="form-control" value="{{old("cpf")}}"><br>
+    value="@if ((!empty$dado->cpf)) {{$dado->cpf}}@elseif (!empty(old('cpf'))) {{old('cpf')}}@else {{""}} @endif"<br>
+
+    <button type="submit">Slay</button>
+    <button type="submit"><a href="{{ url ('aluno')}}">Back gurrll</a></button>
+</form>
 
 @stop
